@@ -26,8 +26,6 @@ class aprioriMapReduce(MRJob):
                 yield others, list((page,support))
 
     def fp_to_association_reduce(self, left, values):
-        # Find value that is not a pattern-support pair
-        #print(left, list(values))
         rule = {}
         tempt = list(values)
         fullpattern_support = []
@@ -40,14 +38,7 @@ class aprioriMapReduce(MRJob):
         for value in tempt:
             pattern = value[0]
             support = value[1]
-            #break
-            #pattern, support = value.split(':')
-            #for page in sets:
-            #    left.remove(page)
             confidence = float(support)/float(fullpattern_support)
-
-            #yield left, pattern, support, confidence
-            #yield left, pattern
             rule = { 'left': left, 'right': pattern, 
                     'sup': support, 'conf': confidence }
             print(rule)        
