@@ -19,11 +19,12 @@ class aprioriMapReduce(MRJob):
         yield page, support
 
     def fp_to_association_map(self, page, support):
-        yield page, support  # Yield the full pattern
-        if len(page) > 1:    # Yield every subpattern
-            for item in page:
-                others = [i for i in page if i != item]
-                yield others, list((page,support))
+        if support > 2:
+            yield page, support  # Yield the full pattern
+            if len(page) > 1:    # Yield every subpattern
+                for item in page:
+                    others = [i for i in page if i != item]
+                    yield others, list((page,support))
 
     def fp_to_association_reduce(self, left, values):
         rule = {}
@@ -33,7 +34,7 @@ class aprioriMapReduce(MRJob):
             if isinstance(sets, int):
                 tempt.remove(sets)
                 continue
-            fullpattern_support = 5
+            fullpattern_support = sets[1]
 
         for value in tempt:
             pattern = value[0]
