@@ -42,19 +42,20 @@ class aprioriMapReduce(MRJob):
         for value in tempt:
             full_support += value[1]
 
-        # Go through each pattern and their corrosponding subpaterns.
-        for i in range(len(tempt)):
-            right_side = ""
-            for item in tempt[i][0]:
-                if item != left_side:
-                    right_side += item
-            support = tempt[i][1]
-            confidence = support / full_support
-            # Print rules if they have high confidence and above minimum support.
-            if confidence > MINIMUM_CONFIDENCE and support > MINIMUM_SUPPORT:
-                rule = { 'left': left_side, 'right': right_side,
-                        'sup': support, 'conf': confidence}
-                print(rule)
+        if full_support < MINIMUM_SUPPORT:
+            # Go through each pattern and their corrosponding subpaterns.
+            for i in range(len(tempt)):
+                right_side = ""
+                for item in tempt[i][0]:
+                    if item != left_side:
+                        right_side += item
+                support = tempt[i][1]
+                confidence = support / full_support
+                # Print rules if they have high confidence and above minimum support.
+                if confidence > MINIMUM_CONFIDENCE and support > MINIMUM_SUPPORT:
+                    rule = { 'left': left_side, 'right': right_side,
+                            'sup': support, 'conf': confidence}
+                    print(rule)
 
     # Define the steps
     def steps(self):
