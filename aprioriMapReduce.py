@@ -2,22 +2,35 @@ from mrjob.job import MRJob
 from mrjob.step import MRStep
 import itertools
 import sys
+import numpy as np
+import time
 
 # Global variables
 SIZE_OF_FREQ_ITEM_SET = 2
-MINIMUM_CONFIDENCE = 0.5
+#MINIMUM_CONFIDENCE = 0.5
+#MINIMUM_SUPPORT = 2
 
 class aprioriMapReduce(MRJob):
-
+    
+    def configure_args(self):
+        super(aprioriMapReduce, self).configure_args()
+        self.add_passthru_arg(
+            '--min_supp', type=int, default=2, help='Minimum Support')
+        self.add_passthru_arg(
+            '--min_conf', type=int, default=0.5, help='Minimum Confidence')
+        self.add_passthru_arg(
+            '--freq_size', type=int, default=2, help='Size of Frequent itemsets')
+                
     # First mapper that generates up to SIZE_OF_FREQ_ITEM_SET itemset.
     def freq_mapper(self, _, text_file):
+
         text_file = text_file.replace('"', '').replace(" ", "").split(",")
         items = text_file[1:]
         # generate the number of itemsets
         for item in items:
             yield [item], 1
 
-        itemsets = itertools.combinations(items, SIZE_OF_FREQ_ITEM_SET)
+        itemsets = itertools.combinations(items, self.options.freq_size)
         for p in itemsets:
             yield p, 1
 
@@ -49,18 +62,19 @@ class aprioriMapReduce(MRJob):
                 tempt.remove(value)
 
         # Go through each pattern and their corrosponding subpaterns.
-        for i in range(len(tempt)):
-            right_side = ""
-            for item in tempt[i][0]:
-                if item != left_side:
-                    right_side += item
-            support = tempt[i][1]
-            confidence = support / full_support
-            # Print rules if they have high confidence and above minimum support.
-            if confidence > MINIMUM_CONFIDENCE:
-                rule = { 'left': left_side, 'right': right_side,
-                    'sup': support, 'conf': confidence}
-                print(rule)
+        if full_support > self.options.min_supp:
+            for i in range(len(tempt)):
+                right_side = ""
+                for item in tempt[i][0]:
+                    if item != left_side:
+                        right_side += item
+                support = tempt[i][1]
+                confidence = support / full_support
+                # Print rules if they have high confidence and above minimum support.
+                if confidence >= self.options.min_conf and support > self.options.min_supp:
+                    rule = { 'left': left_side, 'right': right_side,
+                        'sup': support, 'conf': np.round(confidence,2)}
+                    print(rule)
 
 
     # Define the steps
@@ -74,4 +88,7 @@ class aprioriMapReduce(MRJob):
 
 
 if __name__ == '__main__':
+
+    t1 = time.time()
     aprioriMapReduce.run()
+    print(time.time() - t1)
