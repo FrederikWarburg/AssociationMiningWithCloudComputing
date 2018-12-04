@@ -1,24 +1,24 @@
 # Association Mining With Cloud Computing
 
-This GitHub repository is an parallelize implementation of the Apriori algorithm with MapReduce for generating associtation rules used for the course 02807 "Computational tools for datascience"
+This GitHub repository is a parallelized implementation of the Apriori algorithm with MapReduce in Python3 for generating associtation rules, used for the DTU course 02807: "Computational tools for Data Science"
 
 ----
-In order to run the implenetation run the bash script mapreduce_bash_script
+In order to run the implenetation, run the bash script mapreduce_bash_script
 
-The script takes an dataset in csv format as arguments, so please specify which dataset that is going to be used and parse that as arguments.
+The script takes a dataset in CSV format as argument, so please specify which dataset you would like to pass it as an argument
 
-The available datasets can be seen in the data folder.
+The available datasets can be found in the data folder.
 
-It's not recommend to run datasets greater than 350k rows on a personal machine, as MrJob caches tmp files to your machine that fills up your hardisk. The large files should only be run in the cloud. To try a small example:
+I is not recommended to run this implementation for datasets greater than 350k rows on a personal machine, as MRJob caches temporary files to your machine, which will quickly fill up your storage. The large dataset files should only be run in the cloud. To try a small example:
 
 ``
 Sh mapreduce_bash_script.sh 5k
 ``
 
-The rules can be found in a folder generated called mapreduce results 
+The generated association rules can be found in the automatically created folder called: mapreduce results 
 
 ----
-The packages used are 
+The packages required to run this implementation are:
 
 ``
 mrjob
@@ -28,6 +28,6 @@ numpy
 ``
 
 ---
-In this repository a few files used for result analysation are left in, for the reader to go over. From these the results.ipynb it is seen that our parallelized Apriori implementation is faster than a baseline Apriori implementation for low support values.
+In this repository a few files used for result visualization and analysis are left in, if the reader wishes to go over them. From these the results.ipynb it is seen that our parallelized Apriori implementation is faster than a baseline Apriori implementation for low support values.
 
 
