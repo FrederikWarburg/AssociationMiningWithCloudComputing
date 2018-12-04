@@ -1,6 +1,5 @@
 from mrjob.job import MRJob
 from mrjob.step import MRStep
-
 import numpy as np
 import time
 
@@ -69,6 +68,8 @@ class aprioriMapReduce(MRJob):
 
 
 if __name__ == '__main__':
-    t1 = time.time()
+    # Time taking out commented
+    # t1 = time.time()
     aprioriMapReduce.run()
-    print(time.time() - t1)
+    # Time taking out commented
+    # print(time.time() - t1)
