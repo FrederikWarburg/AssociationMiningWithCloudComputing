@@ -1,6 +1,6 @@
 # Association Mining With Cloud Computing
 
-This GitHub repository is an implementation of the Apriori algorithm for generating associtation rules using MapReduce, developed for use in the DTU course 02807: "Computational tools for Data Science".
+This GitHub repository is a Python3 implementation of the Apriori algorithm for generating associtation rules using MapReduce, developed for use in the DTU course 02807: "Computational tools for Data Science".
 
 ----
 In order to run the implenetation, run the bashscript mapreduce_bash_script
@@ -18,7 +18,7 @@ Sh mapreduce_bash_script.sh 5k
 The generated association rules can be found in the automatically created folder "mapreduce results"
 
 ----
-The packages used are 
+The required packages for running this implementation are
 
 ``
 mrjob
