@@ -1,6 +1,6 @@
 # Association Mining With Cloud Computing
 
-This github repository is a implementation of the apriori algorithm for generating associtation rules used for the course 02807 "Computational tools for datascience"
+This GitHub repository is a implementation of the apriori algorithm for generating associtation rules used for the course 02807 "Computational tools for datascience"
 
 ----
 In order to run the implenetation run the bashscript mapreduce_bash_script
