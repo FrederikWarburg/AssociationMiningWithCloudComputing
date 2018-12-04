@@ -1,5 +1,6 @@
 from mrjob.job import MRJob
 import numpy as np
+
 class wordFrequency(MRJob):
     #
     def mapper(self, _, csv_file):
